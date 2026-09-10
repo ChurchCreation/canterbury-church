@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" role="img" aria-label="Gothic tracery">
+  <title>Gothic tracery</title>
+  <rect width="600" height="800" fill="#141210"/>
+  <path d="M40,800 L40,300 Q40,60 300,60 Q560,60 560,300 L560,800 Z" fill="#1B2A45"/>
+  <path d="M88,760 L88,380 Q88,220 188,220 Q288,220 288,380 L288,760 Z" fill="#2E4A7D" stroke="#141210" stroke-width="9"/>
+  <path d="M312,760 L312,380 Q312,220 412,220 Q512,220 512,380 L512,760 Z" fill="#3D6647" stroke="#141210" stroke-width="9"/>
+  <circle cx="300" cy="168" r="82" fill="#5B3E7E" stroke="#141210" stroke-width="9"/>
+  <circle cx="300" cy="122" r="30" fill="#856512" stroke="#141210" stroke-width="7"/>
+  <circle cx="346" cy="168" r="30" fill="#856512" stroke="#141210" stroke-width="7"/>
+  <circle cx="300" cy="214" r="30" fill="#856512" stroke="#141210" stroke-width="7"/>
+  <circle cx="254" cy="168" r="30" fill="#856512" stroke="#141210" stroke-width="7"/>
+  <g stroke="#4A4239" stroke-width="16" fill="none"><path d="M300,760 L300,250"/></g>
+  <path d="M40,800 L40,300 Q40,60 300,60 Q560,60 560,300 L560,800" fill="none" stroke="#4A4239" stroke-width="26"/>
+
+</svg>

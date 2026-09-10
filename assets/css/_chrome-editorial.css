@@ -1,0 +1,953 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHROME — EDITORIAL
+
+   The house style. Every template built to the reference design shares this
+   file and brings only its own tokens: palette, typefaces, scale.
+
+   WHAT THE REGISTER IS, precisely — these are the moves, not a mood:
+
+     · a CENTRED wordmark over a hairline, with a quiet centred row of ways in
+       underneath it. Not the brand-left / nav-right bar.
+     · a WELCOME split down the middle: a painted panel of type facing a
+       photograph, each getting half, neither on top of the other.
+     · the GROUND TONE CHANGES between sections. This is the one that does the
+       most work and the one that is easiest to skip.
+     · a display serif set LARGE and at ONE weight, with a single italic line
+       that turns.
+     · hairlines dividing things; no card, no shadow, no radius, no gradient.
+     · photography at real scale — half a hero, half a band, 4:5 plates.
+
+   Families that load this: hospitality (Lantern), parish (Canterbury).
+   A family loads it BEFORE its own stylesheet, so its tokens win.
+
+   ── What varies, and what does not ────────────────────────────────────────
+   Vary freely: palette, display and body faces, type scale, which components
+   a page uses and in what order, and any components a family adds of its own.
+   Do NOT vary: the hairline-and-block construction, radius 0, absence of
+   shadow. Those three are what make two templates read as one house rather
+   than as one template painted twice.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ═══ The court — this family's container ════════════════════════════════ */
+.court {
+  inline-size: 100%;
+  max-inline-size: var(--court);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.court--tight { max-inline-size: var(--measure-wide); }
+
+/* Display type is set at ONE weight — that is the register, not a limitation
+   of any one typeface. `font-synthesis-weight: none` in base.css means a 600
+   against a single-weight face renders as 400 anyway, so a family that picks
+   such a face is stating a fact rather than leaving a lie in the cascade. A
+   family with a variable display face overrides --display-weight. */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--display-weight, 400);
+  letter-spacing: var(--tracking-display);
+}
+
+/* ═══ The porch ═══════════════════════════════════════════════════════════
+   Where a visitor is met and where the notices hang. Two centred tiers — the
+   name over a hairline, the ways in underneath — rather than the brand-left /
+   nav-right bar every other template in the world uses, this one included
+   four times over. */
+.porch {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 60;
+  background: var(--bg);
+  border-block-end: var(--hair);
+}
+
+.porch__mark {
+  display: block;
+  padding-block: var(--s-5) var(--s-4);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 0.9rem + 1.6vw, 2rem);
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  color: var(--fg);
+}
+
+.porch__ways {
+  border-block-start: var(--hair);
+}
+.porch__ways ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(var(--s-4), 3vw, var(--s-7));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.porch__ways a {
+  display: flex;
+  align-items: center;
+  min-block-size: 2.75rem;          /* WCAG 2.2 target size */
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--fg-muted);
+  transition: color var(--transition);
+}
+.porch__ways a:hover { color: var(--fg); }
+.porch__ways a[aria-current="page"] {
+  color: var(--fg);
+  box-shadow: inset 0 -1px 0 0 var(--fg);
+}
+
+.porch__tools {
+  position: absolute;
+  inset-block-start: var(--s-3);
+  inset-inline-end: var(--gutter);
+  display: flex;
+  gap: var(--s-2);
+}
+
+.porch-toggle {
+  display: none;
+  align-items: center;
+  gap: var(--s-2);
+  min-block-size: 2.75rem;
+  padding-inline: var(--s-3);
+  margin-inline: auto;
+  background: transparent;
+  border: 0;
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+@media (max-width: 55rem) {
+  /* The mark is centred in the court, but the theme toggle is parked in the
+     court's right-hand end — so centring alone runs a long church name
+     underneath it. The padding reserves the toggle's width on BOTH sides so
+     the name stays optically centred while it shrinks, and the wrap rules
+     mean a genuinely long one ("St Mary and All Saints, Chesterfield") breaks
+     across lines instead of being clipped. */
+  .porch__mark {
+    padding-block: var(--s-4) var(--s-3);
+    padding-inline: 3.25rem;
+    font-size: clamp(0.95rem, 4.2vw, 1.25rem);
+    letter-spacing: 0.1em;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+  .porch-toggle { display: flex; }
+  .porch__ways ul { display: none; padding-block-end: var(--s-3); }
+  .porch__ways[data-open] ul { display: block; }
+  .porch__ways[data-open] a { justify-content: center; }
+}
+
+/* ═══ The welcome ═════════════════════════════════════════════════════════
+   The hero, split down the middle: a painted panel of type facing a
+   photograph. Not a full-bleed image with a scrim over it — that is
+   Cornerstone's move, and doing it again here would be the re-skin trap in
+   its purest form. Here the picture and the words each get half and neither
+   sits on top of the other, which also means the headline's contrast is a
+   fact rather than a hope about how dark the photo is. */
+/* The panel paints itself with the INKED-BAND tokens, not with --accent.
+   --accent/--evening is a link colour, and a link colour on a dark ground has
+   to be light: under the dark theme it lifts to #7FB3C6, which turned this
+   panel into pale blue with white type over it at about 2:1. --bg-invert stays
+   dark in both themes by definition, and contrast.mjs already tests the
+   --fg-invert-on---bg-invert pair, so this hero is covered by an existing
+   assertion rather than by a hope. */
+.welcome {
+  display: grid;
+  padding-block: 0;
+  background: var(--bg-invert);
+  color: var(--fg-invert);
+}
+.welcome__art {
+  display: block;
+  grid-row: 1;
+  min-block-size: 42vh;
+}
+.welcome__art img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+.welcome__panel {
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--s-5);
+  padding: var(--s-8) var(--gutter);
+}
+.welcome__eyebrow {
+  font-family: var(--font-ui);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--muted-invert);
+}
+.welcome__title {
+  font-size: var(--t-3xl);
+  line-height: var(--leading-tight);
+  color: var(--fg-invert);
+  max-inline-size: 14ch;
+}
+/* The one line that turns. A real italic — see build/fetch-fonts.mjs, which
+   re-labels Libre Caslon Text's italic into the Display family so this is not
+   a synthesised slant. */
+.welcome__turn {
+  display: block;
+  font-style: italic;
+  /* Same fallback reasoning as .welcome .btn below: an undefined --lamp makes
+     this declaration resolve to `color`'s INHERITED value, which is the title
+     itself — so the one line meant to turn quietly stops turning. */
+  color: var(--lamp, var(--muted-invert));
+}
+.welcome__lede {
+  max-inline-size: 34ch;
+  color: var(--muted-invert);
+}
+.welcome__lede + .welcome__lede { margin-block-start: var(--s-3); }
+
+/* On the panel the button is the lamp: warm pale on evening blue. */
+/* On the panel the button is the lamp — with a FALLBACK, and the difference
+   is not cosmetic. `background: var(--lamp)` where --lamp is undefined is
+   invalid at computed-value time, and for a non-inherited property that means
+   the declaration resolves to its INITIAL value: transparent. It does not fall
+   back to the `.btn` rule in components.css, because that declaration already
+   lost the cascade. So a family without a lamp got a hero button with no fill
+   and a hard-coded near-black label on a near-black panel — measured at
+   1.29:1 on churchcreation.com's own front page, on the one button the whole
+   site exists to be clicked. `var(--lamp, …)` is a real fallback; bare
+   `var(--lamp)` is a cliff. */
+.welcome .btn {
+  align-self: start;
+  background: var(--lamp, var(--fg-invert));
+  border-color: var(--lamp, var(--fg-invert));
+  color: var(--lamp-fg, var(--bg-invert));
+}
+.welcome .btn:hover {
+  background: var(--lamp-hover, var(--muted-invert));
+  border-color: var(--lamp-hover, var(--muted-invert));
+}
+
+@media (min-width: 55rem) {
+  .welcome {
+    grid-template-columns: 1fr 1fr;
+    min-block-size: min(85vh, 46rem);
+  }
+  /* The picture is FIRST in the markup — it reads better stacked on a phone,
+     and it satisfies the "a band that opens with a picture may touch its own
+     edge" rule in build/check.mjs — then swaps to the right-hand half here. */
+  .welcome__art   { grid-row: 1; grid-column: 2; min-block-size: 0; }
+  .welcome__panel { grid-row: 1; grid-column: 1; padding: var(--s-9) clamp(var(--s-6), 5vw, var(--s-9)); }
+  .welcome__panel > * { max-inline-size: 30rem; }
+}
+
+/* ═══ Settings — the alternating grounds ══════════════════════════════════
+   The one idea this family is built on. Each variant re-declares the surface
+   tokens rather than just painting a background, so everything inside it —
+   rules, muted text, form fields, ghost buttons — re-tunes to the ground it
+   is standing on instead of being tuned to the page's default and hoping. */
+.setting {
+  padding-block: clamp(var(--s-8), 9vw, var(--s-10));
+  background: var(--bg);
+  color: var(--fg);
+}
+/* base.css collapses the gap between adjacent sections. That is right when
+   every section shares one ground and catastrophic when they don't: the second
+   band's first line lands on its own painted edge. This family always pays for
+   its own top padding. */
+.setting + .setting { padding-block-start: clamp(var(--s-8), 9vw, var(--s-10)); }
+
+/* A setting whose content is meant to touch its own edges — the facing bands,
+   where the photograph runs to the top and bottom of the band and the text
+   half carries its own padding instead. A named modifier rather than an inline
+   `padding-block:0`, because build/check.mjs asserts that a painted band keeps
+   its top padding and an inline style is invisible to that rule: the exception
+   has to be something the check can see and exempt. */
+.setting--bleed,
+.setting + .setting--bleed { padding-block: 0; }
+
+/* GENERIC NAMES ON PURPOSE. These were --oat / --blush / --evening, which are
+   Hospitality's paint colours, and a second family on this chrome would have
+   been writing `.setting--oat` on a band that is stone. A family supplies
+   --tint-1 and --tint-2 (plus optional -raised / -sunken / -line) and the
+   register does the rest. */
+.setting--tint {
+  --bg: var(--tint-1);
+  --bg-raised: var(--tint-1-raised, var(--bg-raised));
+  --bg-sunken: var(--tint-1-sunken, var(--tint-1));
+  --line: var(--tint-1-line, var(--line));
+}
+.setting--tint2 {
+  --bg: var(--tint-2);
+  --bg-raised: var(--tint-2-raised, var(--bg-raised));
+  --bg-sunken: var(--tint-2-sunken, var(--tint-2));
+  --line: var(--tint-2-line, var(--line));
+}
+.setting--deep {
+  --bg: var(--bg-invert);
+  --fg: var(--fg-invert);
+  --fg-muted: var(--muted-invert);
+  --line: var(--line-invert);
+  --line-strong: var(--muted-invert);
+
+  /* ⚠ THIS USED TO SAY `--accent: var(--lamp)`, and --lamp is a paint name
+     that ONLY families/hospitality.css defines. In every other family the
+     reference was invalid at computed-value time, which for a custom property
+     means --accent quietly INHERITS instead of failing — so the button on a
+     deep band was painted in the page's ordinary accent, chosen to sit on
+     paper, on top of a near-black ground. Measured on the shipped templates:
+     Sanctus's "Ring the presbytery" and Chapter's "Give to the Minster" came
+     out at 1.27:1 and 1.23:1 against their own band, with label text at
+     1.29:1 against the button. Both were invisible. Nothing caught it,
+     because a stylesheet that references a token nobody defined is not an
+     error anywhere.
+
+     The default is now the band's OWN text and ground colours, reversed. That
+     pair cannot fail: --fg-invert has to be legible on --bg-invert for the
+     band to work at all, so a button painted in one and lettered in the other
+     inherits that guarantee. A family wanting its own colour there — as
+     Hospitality does, in lamplight — sets --deep-accent and opts out. */
+  --accent:    var(--deep-accent, var(--fg-invert));
+  --accent-fg: var(--deep-accent-fg, var(--bg-invert));
+}
+
+/* ── The head of a setting ─────────────────────────────────────────────── */
+.setting__head {
+  text-align: center;
+  max-inline-size: var(--measure-wide);
+  margin-inline: auto;
+  margin-block-end: clamp(var(--s-7), 5vw, var(--s-9));
+}
+.setting__head h2 {
+  font-size: var(--t-2xl);
+  line-height: 1.04;
+}
+.setting__head p {
+  margin-block-start: var(--s-3);
+  font-family: var(--font-ui);
+  font-size: var(--t-md);
+  color: var(--fg-muted);
+}
+.setting__head--open { text-align: start; margin-inline: 0; }
+
+/* ═══ The lintel ══════════════════════════════════════════════════════════
+   What an interior page opens with. Deliberately NOT the split welcome — that
+   belongs to the front page, and repeating it on eight pages would spend the
+   template's one big gesture eight times over. A title set left with a short
+   rule beneath it, on a tinted ground, is enough to say which room you are in. */
+.lintel {
+  padding-block: clamp(var(--s-8), 8vw, var(--s-9)) clamp(var(--s-7), 6vw, var(--s-8));
+  background: var(--tint-1);
+  --bg: var(--tint-1);
+  --bg-raised: var(--tint-1-raised, var(--bg-raised));
+  --line: var(--tint-1-line, var(--line));
+}
+/* --tint2, not --blush: these referenced Hospitality's own paint names and so
+   resolved to NOTHING for the second family on this chrome — which meant the
+   band rendered unpainted, and because it was unpainted the "a painted band
+   must not sit flush against its own edge" rule stopped exempting the section
+   after it. One undefined custom property, two symptoms, neither obviously
+   about colour. */
+.lintel--tint2 {
+  background: var(--tint-2);
+  --bg: var(--tint-2);
+  --bg-raised: var(--tint-2-raised, var(--bg-raised));
+  --line: var(--tint-2-line, var(--line));
+}
+.lintel h1 {
+  font-size: var(--t-2xl);
+  line-height: 1.04;
+  color: var(--accent);
+  max-inline-size: 18ch;
+}
+.lintel__rule {
+  inline-size: 4.5rem;
+  block-size: 1px;
+  margin-block: var(--s-5) var(--s-6);
+  background: var(--accent);
+  border: 0;
+}
+.lintel p {
+  max-inline-size: 52ch;
+  font-family: var(--font-ui);
+  font-size: var(--t-md);
+  color: var(--fg-muted);
+}
+.lintel p + p { margin-block-start: var(--s-4); }
+
+/* ═══ Entries ═════════════════════════════════════════════════════════════
+   A photograph beside a heading, a few facts, and a paragraph. The facts run
+   as icon-and-label rows rather than prose because a date, a place and who it
+   is for are scanned, not read. */
+.entry {
+  display: grid;
+  gap: clamp(var(--s-5), 4vw, var(--s-7));
+  padding-block: clamp(var(--s-6), 5vw, var(--s-8));
+  border-block-start: var(--hair);
+}
+.entry:first-of-type { border-block-start: 0; padding-block-start: 0; }
+@media (min-width: 48rem) {
+  .entry { grid-template-columns: 5fr 7fr; align-items: start; }
+}
+.entry__art img { inline-size: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.entry__name { font-size: var(--t-lg); margin-block-end: var(--s-4); }
+.entry__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  margin-block-end: var(--s-4);
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--fg-muted);
+}
+.entry__facts li { display: flex; align-items: center; gap: var(--s-2); }
+.entry__body p + p { margin-block-start: var(--s-3); }
+.entry__body .btn { margin-block-start: var(--s-5); }
+
+/* ═══ Courses ═════════════════════════════════════════════════════════════
+   Three ways in, divided by hairlines and numbered in the display face. The
+   numeral is set large and pale — it is a position marker, not information,
+   so it is hidden from assistive tech rather than read out as "I". */
+.courses {
+  display: grid;
+  gap: 0;
+}
+.course {
+  padding: var(--s-6) 0 var(--s-5);
+  border-block-start: var(--hair);
+}
+.course:first-child { border-block-start: 0; }
+
+.course__numeral {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 3.25rem;
+  line-height: 1;
+  color: var(--line);
+  margin-block-end: var(--s-5);
+}
+.course__name {
+  font-size: var(--t-lg);
+  margin-block-end: var(--s-3);
+}
+.course p {
+  font-family: var(--font-ui);
+  font-size: var(--t-base);
+  color: var(--fg-muted);
+  max-inline-size: 32ch;
+}
+.course__more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-block-size: 2.75rem;
+  margin-block-start: var(--s-4);
+  font-family: var(--font-ui);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  text-decoration: none;
+  color: var(--fg);
+}
+.course__more .icon { transition: transform var(--transition); }
+.course__more:hover .icon { transform: translateX(0.25em); }
+
+@media (min-width: 48rem) {
+  .courses { grid-template-columns: repeat(3, 1fr); }
+  .course {
+    padding: 0 clamp(var(--s-5), 3vw, var(--s-7));
+    border-block-start: 0;
+    border-inline-start: var(--hair);
+  }
+  .course:first-child { padding-inline-start: 0; border-inline-start: 0; }
+  .course:last-child  { padding-inline-end: 0; }
+}
+
+/* ═══ Facing ══════════════════════════════════════════════════════════════
+   A photograph facing a column of text, edge to edge on its own side. Used
+   for the minister, for the building, for anything where a face or a place
+   does more than a paragraph can. `.facing--flip` puts the picture on the
+   right; alternating them down a page is most of the rhythm. */
+.facing {
+  display: grid;
+  align-items: stretch;
+  padding-block: 0;
+}
+/* The picture keeps its own 4:5 and the BAND takes its height from it, rather
+   than the picture being stretched to a height the text column decided. That
+   is deliberate, and it is also what actually happens: base.css carries
+   `img[width][height] { block-size: auto }` at (0,2,1), which outranks a
+   `block-size: 100%` here — so `object-fit: cover` and any `object-position`
+   alongside it would be dead declarations that look like they are doing
+   something. They were, briefly, and I chased a crop that was really just the
+   sticky porch covering the band after scrolling to it. Measured: zero
+   vertical overflow on all four facing bands at 1024 and 1440.
+
+   The art column is painted so that if a longer bio ever does outgrow the
+   picture, the remainder reads as part of the band rather than a white hole. */
+.facing__art {
+  grid-row: 1;
+  background: var(--bg-sunken);
+}
+.facing__art img {
+  inline-size: 100%;
+  min-block-size: 18rem;
+  object-fit: cover;
+}
+.facing__say {
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--s-4);
+  padding: clamp(var(--s-7), 7vw, var(--s-9)) var(--gutter);
+}
+.facing__name { font-size: var(--t-xl); }
+.facing__role {
+  font-family: var(--font-ui);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--fg-muted);
+}
+.facing__say p { max-inline-size: 42ch; }
+.facing__say .btn { align-self: start; margin-block-start: var(--s-2); }
+
+@media (min-width: 55rem) {
+  .facing { grid-template-columns: 1fr 1fr; }
+  .facing__art { grid-column: 1; }
+  .facing__say {
+    grid-row: 1; grid-column: 2;
+    padding-inline: clamp(var(--s-6), 5vw, var(--s-9));
+  }
+  .facing--flip .facing__art { grid-column: 2; }
+  .facing--flip .facing__say { grid-column: 1; }
+}
+
+/* ═══ Occasions ═══════════════════════════════════════════════════════════
+   Tall photographs with the title set over the foot of the image. The scrim
+   is a flat wash, not a gradient — it covers only the bottom third and it is
+   opaque enough to hold white type over ANY photograph, which matters because
+   a church will swap these for its own pictures on day one. */
+.occasions {
+  display: grid;
+  gap: var(--s-5);
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+.occasion {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  background: var(--bg-invert);
+}
+.occasion img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.occasion:hover img { transform: scale(1.03); }
+.occasion__plate {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding: var(--s-6) var(--s-5) var(--s-5);
+  /* 0.72, and the figure is load-bearing. Composited over a PURE WHITE region
+     of a photograph — the worst case, and the one a church will hit the week
+     it swaps in a snowy churchyard — this ground reaches 7.0:1 against white
+     and 5.1:1 against the eyebrow. At 0.62 the eyebrow was 3.6:1 and failed,
+     while looking perfectly fine over the three photographs that shipped. */
+  background: rgb(16 26 31 / 0.72);
+}
+.occasion__when {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: #DCE6EA;
+  margin-block-end: var(--s-2);
+}
+.occasion__what {
+  font-family: var(--font-display);
+  font-size: var(--t-lg);
+  line-height: 1.1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .occasion:hover img { transform: none; }
+}
+
+/* ═══ Voices ══════════════════════════════════════════════════════════════
+   One person, at a size that says the church meant it. Set in the display
+   face, because a testimonial in body copy is a line nobody reads. */
+.voices {
+  display: grid;
+  gap: clamp(var(--s-6), 5vw, var(--s-8));
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+}
+.voice blockquote {
+  font-family: var(--font-display);
+  font-size: var(--t-lg);
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+.voice figcaption {
+  margin-block-start: var(--s-4);
+  padding-block-start: var(--s-4);
+  border-block-start: var(--hair);
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--fg-muted);
+}
+.voice figcaption b { font-weight: 500; color: var(--fg); }
+
+/* ═══ Company ═════════════════════════════════════════════════════════════
+   The reference runs a marquee of client logos here. A church has no clients,
+   but it does have the groups that use the building every week — Scouts, the
+   toddler group, AA, the choral society — and naming them says more about a
+   parish than any strapline. Text only: real churches do not have logos for
+   these, and inventing some would be a lie in SVG.
+
+   The animation is duplicated content scrolling behind a mask, so it is
+   `aria-hidden` on the second copy and stops dead under reduced motion. */
+.company { overflow: hidden; }
+.company__track {
+  display: flex;
+  inline-size: max-content;
+  gap: clamp(var(--s-6), 5vw, var(--s-9));
+  animation: company-drift 46s linear infinite;
+}
+.company__track span {
+  font-family: var(--font-display);
+  font-size: var(--t-md);
+  white-space: nowrap;
+  color: var(--fg-muted);
+}
+@keyframes company-drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .company { overflow-x: auto; }
+  .company__track { animation: none; }
+}
+
+/* ═══ Questions ═══════════════════════════════════════════════════════════
+   Hairline-ruled rows with a + that becomes a −. Native <details>, so it works
+   before any JavaScript runs and is findable by the browser's own in-page
+   search. */
+.questions {
+  max-inline-size: var(--measure-wide);
+  margin-inline: auto;
+  border-block-start: var(--hair);
+}
+.question { border-block-end: var(--hair); }
+.question > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-5);
+  padding-block: var(--s-5);
+  min-block-size: 3.25rem;
+  font-family: var(--font-display);
+  font-size: var(--t-md);
+  cursor: pointer;
+  list-style: none;
+}
+.question > summary::-webkit-details-marker { display: none; }
+.question > summary::after {
+  content: "+";
+  flex: none;
+  font-family: var(--font-ui);
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--fg-muted);
+}
+.question[open] > summary::after { content: "\2212"; }
+.question > div {
+  padding-block-end: var(--s-6);
+  max-inline-size: var(--measure);
+  font-family: var(--font-ui);
+  font-size: var(--t-base);
+  color: var(--fg-muted);
+}
+.question > div > * + * { margin-block-start: var(--s-3); }
+
+/* ═══ Invitation — the contact band ═══════════════════════════════════════ */
+.invitation__grid {
+  display: grid;
+  gap: clamp(var(--s-6), 5vw, var(--s-8));
+}
+@media (min-width: 55rem) {
+  .invitation__grid { grid-template-columns: 5fr 7fr; align-items: start; }
+}
+.invitation__aside p + p { margin-block-start: var(--s-4); }
+.invitation__aside dt {
+  font-family: var(--font-ui);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--fg-muted);
+  margin-block-start: var(--s-5);
+}
+.invitation__aside dd { margin: var(--s-1) 0 0; }
+
+/* ═══ Valediction — the footer ════════════════════════════════════════════ */
+.valediction {
+  padding-block: clamp(var(--s-8), 7vw, var(--s-9)) var(--s-6);
+  background: var(--bg-invert);
+  color: var(--fg-invert);
+  --fg: var(--fg-invert);
+  --fg-muted: var(--muted-invert);
+  --line: var(--line-invert);
+
+  /* ⚠ Same trap as .setting--deep, and here it bit the one family that DID
+     define --lamp. The footer re-pointed --accent at a pale lamplight and left
+     --accent-fg alone, so Lantern's "Give" button was white type on #DFD1B6:
+     1.32:1 in light, 1.29:1 in dark, on all eight pages. Repointing an accent
+     without repointing the colour that sits ON it is only ever half a change. */
+  --accent:    var(--deep-accent, var(--fg-invert));
+  --accent-fg: var(--deep-accent-fg, var(--bg-invert));
+}
+.valediction__mark {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  padding-block-end: var(--s-7);
+  border-block-end: 1px solid var(--line-invert);
+  margin-block-end: var(--s-7);
+}
+.valediction__grid {
+  display: grid;
+  gap: var(--s-6);
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+}
+.valediction h2 {
+  font-family: var(--font-ui);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--muted-invert);
+  margin-block-end: var(--s-4);
+}
+.valediction ul { list-style: none; margin: 0; padding: 0; }
+.valediction li + li { margin-block-start: var(--s-2); }
+/* ⚠ `:not(.btn)` IS LOAD-BEARING. `.valediction a` is (0,2,0) and
+   `.btn { color: var(--accent-fg) }` in components.css is (0,1,0), so without
+   the exclusion every button in the footer kept its --accent FILL and took the
+   footer's pale text colour for its LABEL. Measured on the shipped templates:
+   Lantern's "Give" at 1.32:1, and Chapter's and Sanctus's at exactly 1:1 —
+   label and fill the same colour, to the byte. The specificity is unchanged,
+   so nothing else about the footer moves. */
+.valediction a:not(.btn) { color: inherit; text-decoration: none; }
+.valediction a:not(.btn):hover { text-decoration: underline; }
+.valediction__note {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-block-start: var(--s-8);
+  padding-block-start: var(--s-5);
+  border-block-start: 1px solid var(--line-invert);
+  font-family: var(--font-ui);
+  font-size: var(--t-xs);
+  color: var(--muted-invert);
+}
+
+/* ── Ghost buttons need a visible edge on every one of the four grounds ── */
+.btn--ghost { border-color: var(--line-strong); }
+
+/* ── Forced colours ─────────────────────────────────────────────────────── */
+@media (forced-colors: active) {
+  .porch, .setting, .occasion__plate { border: 1px solid CanvasText; }
+}
+
+
+/* ═══ Shared furniture ════════════════════════════════════════════════════
+   Components every template on this register needs. They lived in one
+   template's assets/template.css until a second template needed them, which
+   is the moment to move rather than copy. --lamp became --accent: on a deep
+   band a family sets its own --accent, so the times pick up whatever pale
+   that family paints them in.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── The service board ──────────────────────────────────────────────────────
+   Times set in the display face at a size you can read from the back of a
+   hall, on the evening panel. Bound to church.config.json, so what is printed
+   here, what the header says and what goes into the Event schema are one fact
+   in one file rather than three that quietly diverge. */
+.hours {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-inline-size: 52rem;
+  margin-inline: auto;
+  border-block-start: 1px solid var(--line-invert);
+
+  /* ⚠ THE COLUMN TRACKS LIVE HERE, ON THE LIST, NOT ON EACH ROW.
+     Every row used to be its own grid, so every row sized its own columns:
+     "Wednesday" pushed its time 10px right of every other row's, and rows with
+     no note let the label drift 50px further still. Measured on Sanctus's Mass
+     board: five different label positions down one table. A timetable whose
+     columns do not line up is not a timetable.
+     The rows take these tracks with `subgrid`, which is what makes one set of
+     columns govern the whole board. */
+  display: grid;
+  grid-template-columns: minmax(5.5rem, max-content) minmax(6rem, max-content) 1fr;
+}
+
+/* THREE columns: day, time, what. The day was missing, and a service board
+   without it is unusable the moment a church has more than a Sunday pattern —
+   Sanctus showed "9:30 AM Morning Mass" twice in a row with nothing to say
+   which was Tuesday and which was Thursday. Every other check passed, because
+   the rows were present, styled and correctly hydrated. */
+.hour {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  gap: var(--s-2) var(--s-5);
+  align-items: baseline;
+  padding-block: var(--s-5);
+  border-block-end: 1px solid var(--line-invert);
+}
+
+/* Fallback where subgrid is unavailable: fixed tracks, which align across rows
+   for the same reason — they are the same on every row — at the cost of not
+   adapting to a long day name. Better a slightly generous column than a
+   staircase. */
+@supports not (grid-template-columns: subgrid) {
+  .hours { display: block; }
+  .hour { grid-template-columns: 7rem 7.5rem 1fr; }
+}
+.hour__day {
+  font-family: var(--font-ui);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--muted-invert);
+}
+
+.hour__time {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.hour__what {
+  font-family: var(--font-display);
+  font-size: var(--t-lg);
+  line-height: 1.15;
+}
+
+/* The note sits under the label rather than beside it: on a phone a
+   two-column row of "Holy Communion" and "first Sunday of the month" wraps
+   into an unreadable pair of one-word columns. */
+.hour__note {
+  grid-column: 3;
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--muted-invert);
+}
+
+.hours__after {
+  max-inline-size: 52rem;
+  margin-inline: auto;
+  margin-block-start: var(--s-6);
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  color: var(--muted-invert);
+}
+
+@media (max-width: 40rem) {
+  .hours { grid-template-columns: minmax(5.5rem, max-content) 1fr; }
+  .hour__day { grid-column: 1 / -1; }
+  .hour__note { grid-column: 2; }
+  @supports not (grid-template-columns: subgrid) {
+    .hour { grid-template-columns: 7rem 1fr; }
+  }
+}
+@media (max-width: 26rem) {
+  .hours { grid-template-columns: 1fr; }
+  .hour__note { grid-column: 1; }
+  @supports not (grid-template-columns: subgrid) {
+    .hour { grid-template-columns: 1fr; }
+  }
+}
+
+/* ── The shape of an hour ───────────────────────────────────────────────────
+   A numbered list where the number is the point — a visitor's real question
+   is "what happens, and in what order". The counter is drawn in the display
+   face so it belongs to the same page as the course numerals. */
+.shape {
+  counter-reset: shape;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-inline-size: 46rem;
+  margin-inline: auto;
+}
+.shape > li {
+  counter-increment: shape;
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  gap: var(--s-4);
+  padding-block: var(--s-5);
+  border-block-start: var(--hair);
+  font-family: var(--font-ui);
+  font-size: var(--t-base);
+  color: var(--fg-muted);
+}
+.shape > li:first-child { border-block-start: 0; }
+.shape > li::before {
+  content: counter(shape);
+  font-family: var(--font-display);
+  font-size: var(--t-lg);
+  line-height: 1.1;
+  color: var(--line);
+  font-variant-numeric: tabular-nums;
+}
+.shape b {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--t-md);
+  color: var(--fg);
+}
+
+/* ── The enquiry form ─────────────────────────────────────────────────────
+   Fields are given a visible edge on every one of the four grounds this form
+   can land on. Bootstrap-era inputs rely on a light-grey fill against white,
+   which disappears the moment the ground behind them is oat or blush. */
+.invitation__form input,
+.invitation__form select,
+.invitation__form textarea {
+  background: var(--bg-raised);
+  border: 1px solid var(--line-strong);
+}
+.invitation__form textarea { min-block-size: 9rem; }

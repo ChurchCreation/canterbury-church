@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-label="Rose window">
+  <title>Rose window</title>
+  <rect width="600" height="600" fill="#141210"/>
+  <circle cx="300" cy="300" r="272" fill="#1B2A45"/>
+  <circle cx="300.00" cy="104.00" r="52" fill="#5B3E7E" stroke="#141210" stroke-width="7"/>
+  <circle cx="398.00" cy="130.26" r="52" fill="#93251F" stroke="#141210" stroke-width="7"/>
+  <circle cx="469.74" cy="202.00" r="52" fill="#856512" stroke="#141210" stroke-width="7"/>
+  <circle cx="496.00" cy="300.00" r="52" fill="#3D6647" stroke="#141210" stroke-width="7"/>
+  <circle cx="469.74" cy="398.00" r="52" fill="#2E4A7D" stroke="#141210" stroke-width="7"/>
+  <circle cx="398.00" cy="469.74" r="52" fill="#5B3E7E" stroke="#141210" stroke-width="7"/>
+  <circle cx="300.00" cy="496.00" r="52" fill="#93251F" stroke="#141210" stroke-width="7"/>
+  <circle cx="202.00" cy="469.74" r="52" fill="#856512" stroke="#141210" stroke-width="7"/>
+  <circle cx="130.26" cy="398.00" r="52" fill="#3D6647" stroke="#141210" stroke-width="7"/>
+  <circle cx="104.00" cy="300.00" r="52" fill="#2E4A7D" stroke="#141210" stroke-width="7"/>
+  <circle cx="130.26" cy="202.00" r="52" fill="#5B3E7E" stroke="#141210" stroke-width="7"/>
+  <circle cx="202.00" cy="130.26" r="52" fill="#93251F" stroke="#141210" stroke-width="7"/>
+  <circle cx="352.00" cy="209.93" r="42" fill="#856512" stroke="#141210" stroke-width="7"/>
+  <circle cx="404.00" cy="300.00" r="42" fill="#3D6647" stroke="#141210" stroke-width="7"/>
+  <circle cx="352.00" cy="390.07" r="42" fill="#2E4A7D" stroke="#141210" stroke-width="7"/>
+  <circle cx="248.00" cy="390.07" r="42" fill="#5B3E7E" stroke="#141210" stroke-width="7"/>
+  <circle cx="196.00" cy="300.00" r="42" fill="#93251F" stroke="#141210" stroke-width="7"/>
+  <circle cx="248.00" cy="209.93" r="42" fill="#856512" stroke="#141210" stroke-width="7"/>
+  <circle cx="300" cy="300" r="46" fill="#856512" stroke="#141210" stroke-width="8"/>
+  <circle cx="300" cy="300" r="18" fill="#93251F" stroke="#141210" stroke-width="6"/>
+  <circle cx="300" cy="300" r="272" fill="none" stroke="#4A4239" stroke-width="22"/>
+
+</svg>

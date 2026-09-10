@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-label="Labyrinth">
+  <title>Labyrinth</title>
+  <rect width="600" height="600" fill="#E4E0D6"/>
+  <circle cx="300" cy="300" r="272" fill="none" stroke="#4A4239" stroke-width="4"/>
+  <g fill="none" stroke="#5B3E7E" stroke-width="12" stroke-linecap="round">
+    <path d="M360.65,312.89 A62,62 0 1 1 360.65,287.11" opacity="0.55"/>
+    <path d="M220.77,283.16 A81,81 0 1 1 220.77,316.84" opacity="0.5900000000000001"/>
+    <path d="M397.81,320.79 A100,100 0 1 1 397.81,279.21" opacity="0.63"/>
+    <path d="M183.60,275.26 A119,119 0 1 1 183.60,324.74" opacity="0.67"/>
+    <path d="M434.98,328.69 A138,138 0 1 1 434.98,271.31" opacity="0.7100000000000001"/>
+    <path d="M146.43,267.36 A157,157 0 1 1 146.43,332.64" opacity="0.75"/>
+    <path d="M472.15,336.59 A176,176 0 1 1 472.15,263.41" opacity="0.79"/>
+    <path d="M109.26,259.46 A195,195 0 1 1 109.26,340.54" opacity="0.8300000000000001"/>
+    <path d="M509.32,344.49 A214,214 0 1 1 509.32,255.51" opacity="0.8700000000000001"/>
+    <path d="M72.09,251.56 A233,233 0 1 1 72.09,348.44" opacity="0.91"/>
+    <path d="M546.49,352.39 A252,252 0 1 1 546.49,247.61" opacity="0.9500000000000001"/>
+  </g>
+  <circle cx="300" cy="300" r="46" fill="#856512"/>
+  <circle cx="300.00" cy="270.00" r="20" fill="#E4E0D6" opacity="0.55"/>
+  <circle cx="325.98" cy="285.00" r="20" fill="#E4E0D6" opacity="0.55"/>
+  <circle cx="325.98" cy="315.00" r="20" fill="#E4E0D6" opacity="0.55"/>
+  <circle cx="300.00" cy="330.00" r="20" fill="#E4E0D6" opacity="0.55"/>
+  <circle cx="274.02" cy="315.00" r="20" fill="#E4E0D6" opacity="0.55"/>
+  <circle cx="274.02" cy="285.00" r="20" fill="#E4E0D6" opacity="0.55"/>
+
+</svg>

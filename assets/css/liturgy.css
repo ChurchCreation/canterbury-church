@@ -1,0 +1,79 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   LITURGY — the season engine's entire stylesheet.
+
+   core/js/liturgy.js writes one attribute:  <html data-season="lent">
+   This file maps that attribute onto --accent. That is the whole mechanism.
+
+   A template opts in by loading this file. A non-liturgical template simply
+   doesn't, and --accent stays whatever its family set.
+
+   Colours are canonical Western use, verified against the Episcopal Church's
+   published guidance and the USCCB's. Where a tradition has a legitimate
+   alternative (Sarum blue in Advent, unbleached linen in Lent), the church
+   opts in via church.config.json rather than us picking for them.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root                        { --accent: var(--lit-green);   } /* Ordinary Time */
+[data-season="advent"]       { --accent: var(--lit-violet);  }
+[data-season="christmas"]    { --accent: var(--lit-gold);    }
+[data-season="epiphany"]     { --accent: var(--lit-green);   }
+[data-season="lent"]         { --accent: var(--lit-violet);  }
+[data-season="holyweek"]     { --accent: var(--lit-oxblood); }
+[data-season="easter"]       { --accent: var(--lit-gold);    }
+[data-season="pentecost"]    { --accent: var(--lit-oxblood); }
+[data-season="ordinary"]     { --accent: var(--lit-green);   }
+
+/* Traditional variants — set "adventUse":"sarum" or "lentUse":"array"
+   in church.config.json and liturgy.js adds the modifier attribute. */
+[data-season="advent"][data-season-use="sarum"] { --accent: var(--lit-sarum); }
+[data-season="lent"][data-season-use="array"]   { --accent: var(--lit-unbleached); }
+
+/* ── Lent veils the images ──────────────────────────────────────────────────
+   In Lent and Holy Week images in the building are veiled. Here the hero
+   photograph goes and the ground becomes the season's colour — the layout is
+   untouched, so it reads as observance rather than as a broken page. */
+[data-season="lent"]     .hero__media,
+[data-season="holyweek"] .hero__media { display: none; }
+
+[data-season="lent"]     .hero__scrim,
+[data-season="holyweek"] .hero__scrim { background: var(--accent); }
+
+[data-season="lent"]     .hero,
+[data-season="holyweek"] .hero { min-block-size: min(58vh, 30rem); }
+
+[data-season="lent"]     .hero__bar a,
+[data-season="holyweek"] .hero__bar a { background: rgb(12 10 14 / 0.34); }
+[data-season="lent"]     .hero__bar a:hover,
+[data-season="holyweek"] .hero__bar a:hover { background: rgb(12 10 14 / 0.62); }
+
+/* ── The season ribbon ──────────────────────────────────────────────────────
+   Small, factual, and only rendered when the template asks for it. Reads
+   "Ordinary Time" or "Advent · Second Sunday" — never explains itself. */
+.season-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--font-ui);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent);
+}
+
+.season-mark::before {
+  content: "";
+  inline-size: 0.65rem;
+  block-size: 0.65rem;
+  background: var(--accent);
+  flex: none;
+}
+
+/* On the hero image the mark goes white; the swatch keeps the season colour
+   with a hairline so it reads against both photography and flat colour.
+   This MUST live after the base rule above — see note in components.css. */
+.season-mark--onimage { color: #fff; text-shadow: 0 1px 10px rgb(0 0 0 / 0.55); }
+.season-mark--onimage::before { box-shadow: 0 0 0 1px rgb(255 255 255 / 0.65); }
+
+/* Hidden until JS resolves the season, so no flash of the wrong colour. */
+.season-mark:not([data-resolved]) { visibility: hidden; }

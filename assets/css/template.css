@@ -1,0 +1,19 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   CANTERBURY — the pieces only this template has.
+
+   Almost nothing, which is the point of the refactor. The register lives in
+   families/_chrome-editorial.css, the parish's paint and type in
+   families/parish.css, and the service board, the numbered shape and the
+   enquiry form are shared furniture. A file this short is the measure of
+   whether the extraction worked: the next template on this register is a
+   config, a palette and a page order.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Cormorant is a delicate face, and a <details> summary is the one place it
+   has to hold up small. 500 rather than the 400 the rest of the display type
+   is set at. */
+.question > summary { font-weight: 500; }
+
+/* year.html names a liturgical colour beside each season; keep the colour word
+   from competing with the season it belongs to. */
+.question > summary span { font-size: var(--t-sm); }

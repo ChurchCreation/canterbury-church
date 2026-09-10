@@ -1,0 +1,347 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   FAMILY — PARISH
+   Church of England · Episcopal · Scottish Episcopal · Church in Wales ·
+   any parish church that keeps the calendar.
+
+   Built on families/_chrome-editorial.css — the house register — and bringing
+   only what makes it a parish church: limewash and stone rather than white and
+   oat, a high-contrast Garamond rather than a Caslon, and one thing no other
+   template in this system does.
+
+   ── THE SEASON PAINTS THE HERO ────────────────────────────────────────────
+   The welcome panel is not a fixed brand colour. It is `var(--accent)`, which
+   core/js/liturgy.js drives off the church calendar — violet through Advent
+   and Lent, gold at Christmas and Easter, red at Pentecost, green through
+   Ordinary Time. The largest block of colour on the front page changes six
+   times a year, on its own, because the church year moved.
+
+   Every parish church ALREADY does this: the frontal, the stole and the
+   burse change colour, and everyone in the building notices. No church
+   website does it, and a drag-and-drop builder cannot retrofit it. It is the
+   system's wedge, and here it is the whole design rather than a detail.
+
+   White clears 6.58:1 on the worst of the five (Ordinary Time green) and the
+   bone button clears 5.64:1, so the panel is legible in every season — that
+   is checked in build/contrast.mjs, which tests every colour the engine can
+   swap in rather than whichever one today happens to be.
+
+   ⚠ THIS FILE DELIBERATELY DOES NOT DECLARE --accent.
+   liturgy.css owns it, at `:root` and `[data-season="…"]`, both (0,1,0). The
+   token block below is `:root, :root[data-theme="light"]` — and that second
+   selector is (0,2,0), so declaring --accent here would silently outrank the
+   season engine the moment a visitor chose the light theme, leaving the panel
+   stuck on one colour forever. The absence is the feature.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root,
+:root[data-theme="light"] {
+  /* Cormorant Garamond: a high-contrast old-style that wants to be set large,
+     which is exactly what this register does with a display face. Libre
+     Franklin carries the reading text, shared with Hospitality — the display
+     face is what makes a family recognisable, and a second near-identical
+     grotesque would be download weight for no gain. */
+  --font-display: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+  --font-body:    "Libre Franklin", ui-sans-serif, -apple-system, "Segoe UI", sans-serif;
+  --font-ui:      "Libre Franklin", ui-sans-serif, -apple-system, "Segoe UI", sans-serif;
+  /* Cormorant is variable and genuinely too light at 300 for body-sized
+     headings, so the register's one-weight rule is set at 400 here rather
+     than inherited. */
+  --display-weight: 400;
+
+  /* Limewash, stone and clear leaded glass. Warmer than Hospitality's pure
+     white and cooler than Circuit's, which is what keeps three templates in
+     one register from reading as one template. */
+  --limewash-050: #FCFAF6;
+  --limewash-100: #F7F4EE;
+  --stone-200:    #EDE8DE;   /* first tint  — warm  */
+  --glass-200:    #E6EBEC;   /* second tint — cool  */
+  --line-200:     #DBD4C7;
+  --ink-600:      #5C554C;
+  --ink-800:      #332E28;
+  --ink-900:      #231F1A;
+
+  /* THE GROUND THE SEASON PAINTS, which is NOT simply var(--accent).
+     tokens.css LIFTS the liturgical five under a dark theme so they work as
+     text on a dark page — which is exactly backwards for a colour used as a
+     BACKGROUND: the hero panel came out light green with white type on it at
+     2.43:1. In light mode the season colour is already deep enough to carry
+     white; in dark mode it is mixed back down toward near-black, which keeps
+     the hue (you can still tell violet from gold) and restores the contrast.
+     contrast.mjs tests --season-fg against this in both themes and for every
+     season the engine can swap in. */
+  --season-ground: var(--accent);
+  --season-fg:     #FFFFFF;
+
+  /* The button that sits ON the season-painted panel. One pale bone that
+     works against all five seasonal grounds, because a button tuned to violet
+     disappears against gold. */
+  --bone:         #F2EDE3;
+
+  /* The two grounds the register alternates between: warm stone and the cool
+     grey-green of clear leaded glass. */
+  --tint-1:        var(--stone-200);
+  --tint-1-raised: var(--limewash-050);
+  --tint-1-sunken: #E3DCD0;
+  --tint-2:        var(--glass-200);
+  --tint-2-raised: var(--limewash-050);
+  --tint-2-sunken: #D8DFE0;
+
+  --bg:          var(--limewash-100);
+  --bg-raised:   var(--limewash-050);
+  --bg-sunken:   var(--stone-200);
+  --fg:          var(--ink-900);
+  --fg-muted:    var(--ink-600);
+  --line:        var(--line-200);
+  --line-strong: var(--ink-800);
+
+  --bg-invert:    #241F1B;
+  --fg-invert:    #F2EDE3;
+  --line-invert:  #46403A;
+  --muted-invert: #B0A79A;
+
+  --accent-fg:   #FFFFFF;
+
+  /* Set large. A Garamond at 3rem is a different typeface from a Garamond at
+     1rem, and this register is built on that difference. */
+  --t-xs:   0.75rem;
+  --t-sm:   0.8125rem;
+  --t-base: 1rem;
+  --t-md:   1.125rem;
+  --t-lg:   clamp(1.4rem,  1.1rem + 1.2vw,  1.75rem);
+  --t-xl:   clamp(1.9rem,  1.4rem + 2.2vw,  2.9rem);
+  --t-2xl:  clamp(2.4rem,  1.6rem + 3.8vw,  4.1rem);
+  --t-3xl:  clamp(3rem,    1.8rem + 5.6vw,  5rem);
+
+  --leading-tight: 1.0;      /* Cormorant's caps are short; 1.02 leaves a gap */
+  --leading-snug:  1.28;
+  --leading-body:  1.68;
+
+  --tracking-label: 0.16em;
+  --tracking-display: -0.015em;
+
+  --measure:      34rem;
+  --measure-wide: 46rem;
+  --court:        74rem;
+  --gutter:       clamp(1.25rem, 5vw, 4rem);
+
+  --radius:      0;
+  --radius-arch: 0;
+  --shadow:      none;
+
+  --hair:  1px solid var(--line);
+  --border:        var(--hair);
+  --border-strong: 1px solid var(--line-strong);
+
+  --focus: 2px solid var(--ink-900);
+  --focus-offset: 3px;
+}
+
+/* ── Dark ─────────────────────────────────────────────────────────────────
+   Each block restates the SEMANTIC MAPPING as well as the palette — see
+   families/hospitality.css for why redefining the palette alone does nothing.
+   --accent is still absent, for the reason at the top of this file: the
+   season owns it in both themes. The liturgical colours themselves are lifted
+   for a dark ground by tokens.css, so the panel keeps its season. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --limewash-050: #221F1C;
+    --limewash-100: #1A1815;
+    --stone-200:    #24211D;
+    --glass-200:    #1D2224;
+    --line-200:     #3A342D;
+    --ink-600:      #A79E92;
+    --ink-800:      #D8D1C6;
+    --ink-900:      #EFEAE1;
+    --bone:         #EFE7D8;
+
+    --bg:          var(--limewash-100);
+    --bg-raised:   var(--limewash-050);
+    --bg-sunken:   var(--stone-200);
+    --fg:          var(--ink-900);
+    --fg-muted:    var(--ink-600);
+    --line:        var(--line-200);
+    --line-strong: var(--ink-800);
+
+    --tint-1:        var(--stone-200);
+    --tint-1-raised: var(--limewash-050);
+    --tint-1-sunken: #2B2823;
+    --tint-2:        var(--glass-200);
+    --tint-2-raised: var(--limewash-050);
+    --tint-2-sunken: #232A2C;
+
+    --bg-invert:    #120F0D;
+    --fg-invert:    #EFEAE1;
+    --line-invert:  #2E2925;
+    --muted-invert: #9C9488;
+
+    /* tokens.css lifts the liturgical five for ITS dark ground (#16141A).
+       This family's is warmer and lighter, and oxblood — Holy Week and
+       Pentecost — lands at 3.98:1 on the second surface there. Lifted again
+       for this ground specifically. The other four clear as they are. */
+    --season-ground: color-mix(in srgb, var(--accent) 34%, #12100E);
+    --season-fg:     #FFFFFF;
+
+    --season-ground: color-mix(in srgb, var(--accent) 34%, #12100E);
+  --season-fg:   #FFFFFF;
+
+  --lit-oxblood: #DE6D63;
+
+    --accent-fg:   #14110F;
+    --shadow:      none;
+  }
+}
+:root[data-theme="dark"] {
+  --limewash-050: #221F1C;
+  --limewash-100: #1A1815;
+  --stone-200:    #24211D;
+  --glass-200:    #1D2224;
+  --line-200:     #3A342D;
+  --ink-600:      #A79E92;
+  --ink-800:      #D8D1C6;
+  --ink-900:      #EFEAE1;
+  --bone:         #EFE7D8;
+
+  --bg:          var(--limewash-100);
+  --bg-raised:   var(--limewash-050);
+  --bg-sunken:   var(--stone-200);
+  --fg:          var(--ink-900);
+  --fg-muted:    var(--ink-600);
+  --line:        var(--line-200);
+  --line-strong: var(--ink-800);
+
+  --tint-1:        var(--stone-200);
+  --tint-1-raised: var(--limewash-050);
+  --tint-1-sunken: #2B2823;
+  --tint-2:        var(--glass-200);
+  --tint-2-raised: var(--limewash-050);
+  --tint-2-sunken: #232A2C;
+
+  --bg-invert:    #120F0D;
+  --fg-invert:    #EFEAE1;
+  --line-invert:  #2E2925;
+  --muted-invert: #9C9488;
+
+  --season-ground: color-mix(in srgb, var(--accent) 34%, #12100E);
+  --season-fg:   #FFFFFF;
+
+  --lit-oxblood: #DE6D63;
+
+  --accent-fg:   #14110F;
+  --shadow:      none;
+}
+
+/* ═══ The season paints the panel ════════════════════════════════════════ */
+.welcome { background: var(--season-ground); }
+.welcome__turn { color: var(--bone); }
+.welcome__eyebrow,
+.welcome__lede { color: #F0EBE2; }
+.welcome .btn {
+  background: var(--bone);
+  border-color: var(--bone);
+  color: #231F1A;
+}
+.welcome .btn:hover { background: #FFFFFF; border-color: #FFFFFF; }
+
+/* A setting painted in the season, for the one band a page gives to the
+   church year itself. Uses the same token, so it turns on the same day. */
+.setting--season {
+  --bg: var(--season-ground);
+  --fg: var(--season-fg);
+  --fg-muted: #EFE8DC;
+  --line: rgb(255 255 255 / 0.28);
+  --line-strong: rgb(255 255 255 / 0.5);
+  /* The shared furniture (the service board) draws its rules and its muted
+     text from the INVERT tokens, which are this family's dark browns and
+     would be invisible on violet. Re-pointed at translucent white. */
+  --line-invert: rgb(255 255 255 / 0.3);
+  --muted-invert: #EFE8DC;
+  background: var(--season-ground);
+  color: var(--season-fg);
+}
+
+/* ⚠ DO NOT set `--accent` on this element. It reads `background: var(--accent)`
+   itself, and a custom property redefined on an element applies to that
+   element's own declarations — so `--accent: var(--bone)` here painted the
+   band cream and left white text on it. Anything on this band that needs a
+   pale highlight is targeted directly instead. */
+.setting--season .hour__time { color: var(--bone); }
+.setting--season .btn {
+  background: var(--bone);
+  border-color: var(--bone);
+  color: #231F1A;
+}
+
+/* ── Lent and Holy Week veil the images ────────────────────────────────────
+   In a parish church the images and the cross are veiled through Passiontide.
+   Here the hero photograph goes and the panel takes the whole width, so the
+   front page observes the season instead of merely recolouring for it. The
+   LAYOUT is untouched, which is what stops it reading as a broken page —
+   the same principle liturgy.css applies to Cornerstone's hero. */
+[data-season="lent"]     .welcome__art,
+[data-season="holyweek"] .welcome__art { display: none; }
+
+@media (min-width: 55rem) {
+  [data-season="lent"]     .welcome__panel,
+  [data-season="holyweek"] .welcome__panel {
+    grid-column: 1 / -1;
+    align-items: center;
+    text-align: center;
+  }
+  [data-season="lent"]     .welcome__panel > *,
+  [data-season="holyweek"] .welcome__panel > * { max-inline-size: 42rem; }
+  [data-season="lent"]     .welcome__title,
+  [data-season="holyweek"] .welcome__title { max-inline-size: 20ch; }
+  [data-season="lent"]     .welcome .btn,
+  [data-season="holyweek"] .welcome .btn { align-self: center; }
+}
+
+/* ═══ The kalendar strip ═════════════════════════════════════════════════
+   Directly under the welcome: what season it is, what colour that is, and
+   what is next. A parish's two most-asked questions in one line.
+
+   The colour swatch is NOT the only carrier of the season — the season is
+   named in words beside it. A strip that says only "we are purple now" is
+   useless to anyone who cannot see the swatch. */
+.kalendar {
+  background: var(--bg-raised);
+  border-block-end: var(--hair);
+  font-family: var(--font-ui);
+}
+.kalendar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3) var(--s-6);
+  padding-block: var(--s-4);
+}
+.kalendar__season {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+.kalendar__swatch {
+  inline-size: 1.1rem;
+  block-size: 1.1rem;
+  background: var(--accent);
+  border: 1px solid rgb(0 0 0 / 0.18);
+  flex: none;
+}
+.kalendar__date,
+.kalendar__next { font-size: var(--t-sm); color: var(--fg-muted); }
+.kalendar__next b { color: var(--fg); font-weight: 600; }
+.kalendar__next { margin-inline-start: auto; }
+@media (max-width: 48rem) { .kalendar__next { margin-inline-start: 0; } }
+
+/* ═══ The year wheel ═════════════════════════════════════════════════════
+   core/js/viz.js draws it and core/css/viz.css lays it out as .year-layout.
+   Nothing here may be called .wheel — that is the SVG's own class, and taking
+   it turned the drawing into a grid whose month labels rendered as a list. */
+.year-layout__prose p + p { margin-block-start: var(--s-4); }
+
+@media (forced-colors: active) {
+  .kalendar__swatch { border: 1px solid CanvasText; }
+}
