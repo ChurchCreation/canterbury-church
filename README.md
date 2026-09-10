@@ -4,7 +4,11 @@ A free website template for Anglican, Episcopal and Catholic parishes. It knows 
 
 **[Live demo](https://churchcreation.com/demo/canterbury/)** · **[About this template](https://churchcreation.com/templates/canterbury/)** · GPL-2.0-or-later
 
-![Canterbury](screenshot.png)
+![Home page](images/preview.jpg)
+
+| Dark mode | On a phone |
+|---|---|
+| ![The same page in dark mode](images/preview-dark.jpg) | ![The same page on a phone](images/preview-mobile.jpg) |
 
 ## Installing
 
