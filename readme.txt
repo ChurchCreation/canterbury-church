@@ -8,7 +8,7 @@ License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: one-column, custom-colors, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, block-patterns, editor-style, full-width-template, blog
 
-Parish Eucharist at 10, Choral Evensong at 6, and a church open every day from nine until dusk. Service times, the church year, weddings, baptisms and funerals.
+A free church website template for parish and cathedral churches, with a liturgical calendar.
 
 == Description ==
 

@@ -1,6 +1,6 @@
 # Canterbury — a free WordPress theme for churches
 
-Parish Eucharist at 10, Choral Evensong at 6, and a church open every day from nine until dusk. Service times, the church year, weddings, baptisms and funerals.
+A free website template for Anglican, Episcopal and Catholic parishes. It knows the church year: the season is computed from the date and colours the page, and the movable feasts are worked out rather than typed in, so the calendar is never out of date. Pages for services, music, the church year, and weddings, baptisms and funerals. Self-hosted typefaces, dark mode, and no external requests.
 
 **[Live demo](https://churchcreation.com/demo/canterbury/)** · **[About this template](https://churchcreation.com/templates/canterbury/)** · GPL-2.0-or-later
 
